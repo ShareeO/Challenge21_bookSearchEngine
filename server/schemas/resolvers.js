@@ -33,7 +33,7 @@ const resolvers = {
         throw new AuthenticationError("Could not log in");
       }
   
-      const correctPw = await user.isCorrectPassword(body.password);
+      const correctPw = await user.isCorrectPassword(args.password);
   
       if (!correctPw) {
         throw new AuthenticationError("Wrong password");
@@ -59,7 +59,7 @@ const resolvers = {
     removeBook: async (parent, args, context) => {
       const updatedUser = await User.findOneAndUpdate(
         { _id: context.user._id },
-        { $pull: { savedBooks: { bookId: params.bookId } } },
+        { $pull: { savedBooks: { bookId: args.bookId } } },
         { new: true }
       );
       if (!updatedUser) {
